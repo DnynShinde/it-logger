@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { updateLog, clearCurrent } from "../../actions/logActions";
+import TechSelectOptions from "../techs/TechSelectOptions";
 import PropTypes from "prop-types";
 import M from "materialize-css/dist/js/materialize.min.js";
-import { updateLog, clearCurrent } from "../../action/logActions";
 
-const EditLogModal = ({ current, updateLog, clearCurrent }) => {
+const EditLogModal = ({
+  log: { current },
+  tech: { techs },
+  updateLog,
+  clearCurrent,
+}) => {
   const [message, setMessage] = useState("");
   const [attention, setAttention] = useState(false);
   const [tech, setTech] = useState("");
@@ -13,35 +19,36 @@ const EditLogModal = ({ current, updateLog, clearCurrent }) => {
     if (current !== null) {
       setMessage(current.message);
       setAttention(current.attention);
-      setTech(current.tech);
     }
+    // eslint-disable-next-line
   }, [current]);
 
   const onSubmit = () => {
-    if (message === "" || tech === "") {
-      M.toast({ html: "Please enter a message and tech!" });
+    if (message.trim() === "" || tech === "") {
+      M.toast({ html: "Please enter a log message and select tech." });
     } else {
-      updateLog({
-        message,
-        attention,
-        tech,
-        date: new Date(),
+      const updatedLog = {
         id: current.id,
-      });
+        message,
+        tech,
+        attention,
+        date: new Date(),
+      };
+      updateLog(updatedLog);
+      M.toast({ html: `Log #${current.id} updated by ${tech}.` });
 
-      M.toast({ html: `Log #${current.id} updated successfully` });
-
-      clearCurrent();
-      //  Clear Fields
+      // Clear fields
       setMessage("");
       setTech("");
       setAttention(false);
+      clearCurrent();
     }
   };
+
   return (
-    <div id="edit-log-modal" className="modal" style={ModalStyle}>
+    <div id="edit-log-modal" className="modal" style={modalStyle}>
       <div className="modal-content">
-        <h4>Enter System Logs</h4>
+        <h4>Edit System Log #{current && current.id}</h4>
         <div className="row">
           <div className="input-field">
             <input
@@ -52,45 +59,48 @@ const EditLogModal = ({ current, updateLog, clearCurrent }) => {
             />
           </div>
         </div>
+
         <div className="row">
           <div className="input-field">
             <select
               name="tech"
               value={tech}
               className="browser-default"
-              onChange={(e) => setTech(e.target.value)}
+              onChange={(e) => {
+                setTech(e.target.value);
+              }}
             >
               <option value="" disabled>
                 Select Technician
               </option>
-              <option value="Balaso">Balaso</option>
-              <option value="Anjali">Anjali</option>
-              <option value="Kartik">Kartik</option>
+              <TechSelectOptions />
             </select>
           </div>
         </div>
+
         <div className="row">
           <div className="input-field">
             <p>
               <label>
                 <input
                   type="checkbox"
-                  name="attention"
-                  value={attention}
                   className="filled-in"
+                  checked={attention}
+                  value={attention}
                   onChange={(e) => setAttention(!attention)}
                 />
-                <span>Need Attention</span>
+                <span>Needs Attention</span>
               </label>
             </p>
           </div>
         </div>
       </div>
+
       <div className="modal-footer">
         <a
           href="#!"
           onClick={onSubmit}
-          className="modal-close waves-effect blue waves-light  btn"
+          className="modal-close waves-effect blue waves-light btn"
         >
           Enter
         </a>
@@ -99,19 +109,22 @@ const EditLogModal = ({ current, updateLog, clearCurrent }) => {
   );
 };
 
-const ModalStyle = {
+const modalStyle = {
   width: "75%",
   height: "75%",
 };
-EditLogModal.prototype = {
-  current: PropTypes.object,
+
+EditLogModal.propTypes = {
+  log: PropTypes.object.isRequired,
   updateLog: PropTypes.func.isRequired,
   clearCurrent: PropTypes.func.isRequired,
 };
 
-const mapStateToProp = (state) => ({
-  current: state.log.current,
+const mapStateToProps = (state) => ({
+  log: state.log,
+  tech: state.tech,
 });
-export default connect(mapStateToProp, { updateLog, clearCurrent })(
+
+export default connect(mapStateToProps, { updateLog, clearCurrent })(
   EditLogModal
 );

@@ -1,18 +1,18 @@
 {
   "logs": [
     {
-      "message": "003 workstation's hard drive ",
+      "message": "#04 server has bin down",
       "attention": true,
-      "tech": "Balaso",
-      "date": "2020-09-25T16:25:14.675Z",
-      "id": 1
+      "tech": "Dnyn  Shinde",
+      "date": "2020-09-26T18:14:33.243Z",
+      "id": 3
     },
     {
-      "message": "003 workstation's hard drive fixed",
+      "message": "07 hard drive has bin fixed",
       "attention": false,
-      "tech": "Anjali",
-      "date": "2020-09-25T16:25:51.541Z",
-      "id": 2
+      "tech": "Dnyn  Shinde",
+      "date": "2020-09-26T18:15:51.636Z",
+      "id": 4
     }
   ],
   "techs": [
@@ -27,14 +27,14 @@
       "lastName": "Smith"
     },
     {
-      "id": 3,
-      "firstName": "Sara",
-      "lastName": "Wilson"
+      "firstName": "farhad",
+      "lastName": "Acidwala",
+      "id": 5
     },
     {
-      "firstName": "Dnyn",
+      "firstName": "Dnyn ",
       "lastName": "Shinde",
-      "id": 4
+      "id": 6
     }
   ]
 }

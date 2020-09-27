@@ -3,7 +3,7 @@ import Moment from "react-moment";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import M from "materialize-css/dist/js/materialize.min.js";
-import { deleteLog, setCurrent } from "../../action/logActions";
+import { deleteLog, setCurrent } from "../../actions/logActions";
 
 const LogItems = ({ log, deleteLog, setCurrent }) => {
   const onDelete = () => {

@@ -117,6 +117,7 @@ export const searchLogs = (text) => async (dispatch) => {
     });
   }
 };
+
 // Set Current
 export const setCurrent = (log) => {
   return {
@@ -131,6 +132,8 @@ export const clearCurrent = () => {
     type: CLEAR_CURRENT,
   };
 };
+
+// Set loading
 export const setLoading = () => {
   return {
     type: SET_LOADING,
