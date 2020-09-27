@@ -7,11 +7,11 @@
 
 ### Usage
  Install dependencies:
- ```
+ ```bash
  npm install
  ```
  Run server:
- ```
+ ```bash
  npm run dev # JSON-Server (:5000) and React (:3000)
  npm run json-server # Run only JSON-Server (:5000)
  ```
